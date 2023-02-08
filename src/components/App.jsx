@@ -1,28 +1,28 @@
 import { Component } from 'react';
 import { GlobalStyle } from './GlobalStyle';
-import { Box } from './Box';
+import { Section } from './Section';
 
 import { SectionTitle } from './SectionTitle';
 import { StatisticText } from './StatisticText';
 import { FeedbackOptions } from './FeedbackOptions';
+import { Notification } from './Notification';
 
 export class App extends Component {
   state = {
-    good: 3,
-    neutral: 4,
-    bad: 5,
+    good: 0,
+    neutral: 0,
+    bad: 0,
   };
   countTotalFeedback(obj) {
     return Object.values(obj).reduce((acc, el) => acc + el, 0);
   }
   countPositiveFeedbackPercentage(total, good) {
-    return `${(good / total) * 100}%`;
+    return `${Math.round((good / total) * 100)}%`;
   }
-  onLeaveFeedback = e => {
-    // this.setState(prevState => ({
-    //   rang: prevState.rang + 1,
-    // }));
-    console.log(e);
+  onLeaveFeedback = str => {
+    this.setState(prevState => ({
+      [str]: prevState[str] + 1,
+    }));
   };
   render() {
     const { good, neutral, bad } = this.state;
@@ -32,26 +32,33 @@ export class App extends Component {
       good
     );
     return (
-      <Box as="main" px={4}>
-        <Box as="section" px={4}>
+      <>
+        <Section px={5} mt={5}>
           <SectionTitle>Please leave your feedback </SectionTitle>
           <FeedbackOptions
-            options={this.state}
+            options={Object.keys(this.state)}
             onLeaveFeedback={this.onLeaveFeedback}
           />
-        </Box>
-        <Box as="section" px={4}>
-          <SectionTitle>Statistics </SectionTitle>
-          <StatisticText>Good: {good}</StatisticText>
-          <StatisticText>Neutral: {neutral}</StatisticText>
-          <StatisticText>Bad: {bad}</StatisticText>
-          <StatisticText>Total: {totalFeedback}</StatisticText>
-          <StatisticText>
-            Positive feedback: {positiveFeedbackPercentage}
-          </StatisticText>
-        </Box>
+        </Section>
+        {totalFeedback > 0 ? (
+          <Section px={5} mt={5}>
+            <SectionTitle>Statistics </SectionTitle>
+            <StatisticText>Good: {good}</StatisticText>
+            <StatisticText>Neutral: {neutral}</StatisticText>
+            <StatisticText>Bad: {bad}</StatisticText>
+            <StatisticText>Total: {totalFeedback}</StatisticText>
+            <StatisticText>
+              Positive feedback: {positiveFeedbackPercentage}
+            </StatisticText>
+          </Section>
+        ) : (
+          <Section px={5} mt={5}>
+            <Notification message="There is no feedback" />
+          </Section>
+        )}
+
         <GlobalStyle />
-      </Box>
+      </>
     );
   }
 }

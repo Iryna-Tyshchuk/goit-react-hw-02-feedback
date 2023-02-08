@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-const StyledButton = styled.button`
+export const Button = styled.button`
+  text-transform: capitalize;
   display: inline-flex;
   align-items: center;
   gap: ${p => p.theme.space[2]}px;
@@ -23,10 +24,15 @@ const StyledButton = styled.button`
   }
 `;
 
-export const Button = ({ type = 'button', disabled = false, children }) => {
-  return (
-    <StyledButton type={type} disabled={disabled}>
-      {children}
-    </StyledButton>
-  );
-};
+// export const Button = ({
+//   type = 'button',
+//   disabled = false,
+//   children,
+//   onClick,
+// }) => {
+//   return (
+//     <StyledButton type={type} disabled={disabled} onClick={onClick}>
+//       {children}
+//     </StyledButton>
+//   );
+// };

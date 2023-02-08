@@ -10,7 +10,7 @@ import {
   position,
 } from 'styled-system';
 
-export const Box = styled('div')(
+export const Section = styled('section')(
   color,
   space,
   layout,
