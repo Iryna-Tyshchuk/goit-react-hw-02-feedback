@@ -1,11 +1,10 @@
 import { Component } from 'react';
-import { GlobalStyle } from './GlobalStyle';
-import { Section } from './Section';
+import { GlobalStyle } from '../styles/GlobalStyle';
 
-import { SectionTitle } from './SectionTitle';
-import { StatisticText } from './StatisticText';
-import { FeedbackOptions } from './FeedbackOptions';
-import { Notification } from './Notification';
+import { Section } from './Section/Section';
+import { Statistics } from './Statistics/Statistics';
+import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
+import { Notification } from './Notification/Notification';
 
 export class App extends Component {
   state = {
@@ -33,26 +32,24 @@ export class App extends Component {
     );
     return (
       <>
-        <Section px={5} mt={5}>
-          <SectionTitle>Please leave your feedback </SectionTitle>
+        <Section title="Please leave your feedback ">
           <FeedbackOptions
             options={Object.keys(this.state)}
             onLeaveFeedback={this.onLeaveFeedback}
           />
         </Section>
         {totalFeedback > 0 ? (
-          <Section px={5} mt={5}>
-            <SectionTitle>Statistics </SectionTitle>
-            <StatisticText>Good: {good}</StatisticText>
-            <StatisticText>Neutral: {neutral}</StatisticText>
-            <StatisticText>Bad: {bad}</StatisticText>
-            <StatisticText>Total: {totalFeedback}</StatisticText>
-            <StatisticText>
-              Positive feedback: {positiveFeedbackPercentage}
-            </StatisticText>
+          <Section title="Statistics">
+            <Statistics
+              good={good}
+              neutral={neutral}
+              bad={bad}
+              total={totalFeedback}
+              positivePercentage={positiveFeedbackPercentage}
+            />
           </Section>
         ) : (
-          <Section px={5} mt={5}>
+          <Section>
             <Notification message="There is no feedback" />
           </Section>
         )}
@@ -62,8 +59,3 @@ export class App extends Component {
     );
   }
 }
-
-// <Section title="">
-// <Statistics good={} neutral={} bad={} total={} positivePercentage={}/></Section>
-// <Section title="">
-// </Section>
